@@ -1,5 +1,5 @@
-import { z } from "zod";
 import { promises as fs } from "fs";
+import { z } from "zod";
 import { BaseTool } from "../utils/base-tool.js";
 
 // Types for SVGL API responses
@@ -179,8 +179,8 @@ export class LogoSearchTool extends BaseTool {
         "2. Import and use like this:",
         "```tsx",
         "import { " +
-          foundIcons.map((c) => c.icon).join(", ") +
-          " } from '@/icons';",
+        foundIcons.map((c) => c.icon).join(", ") +
+        " } from '@/icons';",
         "```",
       ].join("\n"),
     };
@@ -322,8 +322,8 @@ export class LogoSearchTool extends BaseTool {
           "2. Import and use like this:",
           "```tsx",
           "import { " +
-            foundIcons.map((c) => c.icon).join(", ") +
-            " } from '@/icons';",
+          foundIcons.map((c) => c.icon).join(", ") +
+          " } from '@/icons';",
           "```",
         ].join("\n"),
       };

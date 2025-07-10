@@ -1,9 +1,7 @@
+import open from "open";
 import { z } from "zod";
 import { BaseTool } from "../utils/base-tool.js";
-import { twentyFirstClient } from "../utils/http-client.js";
 import { CallbackServer } from "../utils/callback-server.js";
-import open from "open";
-import { getContentOfFile } from "../utils/get-content-of-file.js";
 
 const UI_TOOL_NAME = "21st_magic_component_builder";
 const UI_TOOL_DESCRIPTION = `
