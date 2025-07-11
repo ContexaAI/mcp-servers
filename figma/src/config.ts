@@ -97,7 +97,6 @@ export function getServerConfig(isStdioMode: boolean): ServerConfig {
     console.error(
       "Either FIGMA_API_KEY or FIGMA_OAUTH_TOKEN is required (via CLI argument or .env file)",
     );
-    process.exit(1);
   }
 
   // Log configuration sources

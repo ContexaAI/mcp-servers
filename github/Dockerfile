@@ -18,6 +18,7 @@ WORKDIR /app
 
 RUN npm ci --ignore-scripts --omit-dev
 
+# Expose HTTP port
 EXPOSE 8080
 
 ENTRYPOINT ["node", "dist/index.js"]

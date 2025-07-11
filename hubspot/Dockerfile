@@ -5,7 +5,8 @@ COPY . /app
 
 RUN npm install --production --ignore-scripts
 
+# Expose HTTP port
 EXPOSE 8080
 
-CMD ["node", "dist/sse.js"]
+CMD ["node", "dist/index.js"]
 

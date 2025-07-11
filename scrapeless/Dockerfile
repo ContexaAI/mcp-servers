@@ -18,4 +18,7 @@ ENV NODE_ENV=production
 
 RUN npm ci --ignore-scripts --omit-dev
 
+# Expose HTTP port
+EXPOSE 8080
+
 ENTRYPOINT ["node", "build/index.js"]

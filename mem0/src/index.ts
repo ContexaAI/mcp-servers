@@ -9,10 +9,17 @@ import {
 import { MemoryClient } from 'mem0ai';
 import { contexaStart } from './contexa-server.js';
 
-const MEM0_API_KEY = process?.env?.MEM0_API_KEY || '';
+let memoryClient: MemoryClient | null = null;
 
-// Initialize mem0ai client
-const memoryClient = new MemoryClient({ apiKey: MEM0_API_KEY });
+function getMemoryClient(): MemoryClient {
+  if (!memoryClient) {
+    const MEM0_API_KEY = process?.env?.MEM0_API_KEY || '';
+    memoryClient = new MemoryClient({ apiKey: MEM0_API_KEY });
+    return memoryClient;
+  }
+
+  return memoryClient;
+}
 
 // Tool definitions
 const ADD_MEMORY_TOOL: Tool = {
@@ -75,7 +82,7 @@ async function addMemory(content: string, userId: string) {
       { role: "assistant", content: "Memory storage system" },
       { role: "user", content }
     ];
-    await memoryClient.add(messages, { user_id: userId });
+    await getMemoryClient().add(messages, { user_id: userId });
     return true;
   } catch (error) {
     console.error('Error adding memory:', error);
@@ -86,7 +93,7 @@ async function addMemory(content: string, userId: string) {
 // Helper function to search memories
 async function searchMemories(query: string, userId: string) {
   try {
-    const results = await memoryClient.search(query, { user_id: userId });
+    const results = await getMemoryClient().search(query, { user_id: userId });
     return results;
   } catch (error) {
     console.error('Error searching memories:', error);

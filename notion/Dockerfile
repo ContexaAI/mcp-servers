@@ -32,6 +32,7 @@ COPY --from=builder /usr/local/bin/notion-mcp-server /usr/local/bin/notion-mcp-s
 # Set default environment variables
 ENV OPENAPI_MCP_HEADERS="{}"
 
+# Expose HTTP port
 EXPOSE 8080
 
 

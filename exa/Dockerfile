@@ -22,18 +22,16 @@ FROM node:18-alpine AS runner
 
 WORKDIR /app
 
-# Copy compiled code from the builder stage
-COPY --from=builder /app/.smithery ./.smithery
 COPY package.json package-lock.json ./
 
 # Install only production dependencies
 RUN npm ci --production --ignore-scripts
 
-# Set environment variable for the Exa API key
-ENV EXA_API_KEY=your-api-key-here
+# Copy the built application from the builder stage
+COPY --from=builder /app/build ./build
 
-# Expose the port the app runs on
-EXPOSE 3000
+# Expose HTTP port
+EXPOSE 8080
 
 # Run the application
-ENTRYPOINT ["node", ".smithery/index.cjs"]
+ENTRYPOINT ["node", "build/index.js"]

@@ -1,9 +1,9 @@
-import { z } from "zod";
-import axios from "axios";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { API_CONFIG } from "./config.js";
+import axios from "axios";
+import { z } from "zod";
 import { ExaSearchRequest, ExaSearchResponse } from "../types.js";
 import { createRequestLogger } from "../utils/logger.js";
+import { API_CONFIG } from "./config.js";
 
 export function registerWebSearchTool(server: McpServer, config?: { exaApiKey?: string }): void {
   server.tool(
@@ -16,9 +16,9 @@ export function registerWebSearchTool(server: McpServer, config?: { exaApiKey?: 
     async ({ query, numResults }) => {
       const requestId = `web_search_exa-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
       const logger = createRequestLogger(requestId, 'web_search_exa');
-      
+
       logger.start(query);
-      
+
       try {
         // Create a fresh axios instance for each request
         const axiosInstance = axios.create({
@@ -42,15 +42,15 @@ export function registerWebSearchTool(server: McpServer, config?: { exaApiKey?: 
             livecrawl: 'preferred'
           }
         };
-        
+
         logger.log("Sending request to Exa API");
-        
+
         const response = await axiosInstance.post<ExaSearchResponse>(
           API_CONFIG.ENDPOINTS.SEARCH,
           searchRequest,
           { timeout: 25000 }
         );
-        
+
         logger.log("Received response from Exa API");
 
         if (!response.data || !response.data.results) {
@@ -64,24 +64,24 @@ export function registerWebSearchTool(server: McpServer, config?: { exaApiKey?: 
         }
 
         logger.log(`Found ${response.data.results.length} results`);
-        
+
         const result = {
           content: [{
             type: "text" as const,
             text: JSON.stringify(response.data, null, 2)
           }]
         };
-        
+
         logger.complete();
         return result;
       } catch (error) {
         logger.error(error);
-        
+
         if (axios.isAxiosError(error)) {
           // Handle Axios errors specifically
           const statusCode = error.response?.status || 'unknown';
           const errorMessage = error.response?.data?.message || error.message;
-          
+
           logger.log(`Axios error (${statusCode}): ${errorMessage}`);
           return {
             content: [{
@@ -91,7 +91,7 @@ export function registerWebSearchTool(server: McpServer, config?: { exaApiKey?: 
             isError: true,
           };
         }
-        
+
         // Handle generic errors
         return {
           content: [{
