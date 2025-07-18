@@ -64,7 +64,7 @@ export async function contexaStart(server: Server | McpServer) {
   initializeTracing(app);
 
   app.get(['/health', '/'], (_req, res) => {
-    res.json({ status: 'OK', server: SERVER_NAME, version: SERVER_VERSION, serverName: MCP_SERVER_NAME });
+    res.json({ status: 'OK', server: SERVER_NAME, version: SERVER_VERSION, mcpServer: MCP_SERVER_NAME });
   });
 
   app.post('/mcp', async (req: Request, res: Response) => {
