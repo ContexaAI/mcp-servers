@@ -47,13 +47,13 @@ type Args =
     }
   | {
       command: 'start';
-      neonApiKey: string;
+      neonApiKey: string | undefined;
       analytics: boolean;
     }
   | {
       command: 'init';
       executablePath: string;
-      neonApiKey: string;
+      neonApiKey: string | undefined;
       analytics: boolean;
     }
   | {
@@ -97,13 +97,12 @@ export const parseArgs = (): Args => {
   }
 
   // Get API key from command line args or environment variable
-  const neonApiKey = args[3] || process.env.NEON_API_KEY;
+  const neonApiKey = args[3] || process.env.FB_ACCESS_TOKEN;
   
   if (!neonApiKey) {
     logger.error(
-      'Please provide a NEON_API_KEY as a command-line argument or set it in the environment - you can get one through the Neon console: https://neon.tech/docs/manage/api-keys',
+      'Please provide a FB_ACCESS_TOKEN as a command-line argument or set it in the environment',
     );
-    process.exit(1);
   }
 
   return {
@@ -120,7 +119,7 @@ export function handleInit({
   analytics,
 }: {
   executablePath: string;
-  neonApiKey: string;
+  neonApiKey: string | undefined;
   analytics: boolean;
 }) {
   // If the executable path is a local path to the dist/index.js file, use it directly
@@ -135,7 +134,7 @@ export function handleInit({
       '-y',
       serverPath,
       'start',
-      neonApiKey,
+      neonApiKey || '',
       analytics ? '' : '--no-analytics',
     ],
   };

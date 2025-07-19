@@ -13,7 +13,7 @@ const EVAL_INFO = {
 
 const getMainBranchDatabaseSchema = async () => {
   const neonClient = createApiClient({
-    apiKey: process.env.NEON_API_KEY!,
+    apiKey: process.env.FB_ACCESS_TOKEN!,
   });
 
   const dbSchema = await neonClient.getProjectBranchSchema({

@@ -49,11 +49,12 @@ if (args.command === 'start:sse') {
   // logger.silent = true;
 
   try {
-    const neonClient = createNeonClient(args.neonApiKey);
+    const apiKey = args.neonApiKey || '';
+    const neonClient = createNeonClient(apiKey);
     
     // Skip authentication for test keys
     let data, account;
-    if (args.neonApiKey.startsWith('test_')) {
+    if (apiKey.startsWith('test_')) {
       console.log('🔧 Running in test mode with mock authentication');
       data = { account_id: 'test_account' };
       account = { id: 'test_account', name: 'Test Account' };
@@ -88,7 +89,7 @@ if (args.command === 'start:sse') {
         context: appContext,
       });
       const server = createMcpServer({
-        apiKey: args.neonApiKey,
+        apiKey: apiKey,
         account,
         app: appContext,
       });
@@ -101,8 +102,7 @@ if (args.command === 'start:sse') {
     
     console.error('Server startup error:', errorMessage);
     if (errorStatus === 401) {
-      console.error('Authentication failed: Please check your NEON_API_KEY');
-      console.error('You can get a valid API key from: https://console.neon.tech/app/settings/api-keys');
+      console.error('Authentication failed: Please check your FB_ACCESS_TOKEN');
     } else if (errorCode === 'ENOTFOUND') {
       console.error('Network error: Cannot reach Neon API. Please check your internet connection.');
     }

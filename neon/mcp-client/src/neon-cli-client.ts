@@ -7,7 +7,7 @@ dotenv.config({
 });
 const cli = new MCPClientCLI({
   command: path.resolve(__dirname, '../../dist/index.js'), // Use __dirname for relative path
-  args: ['start', process.env.NEON_API_KEY!],
+  args: ['start', process.env.FB_ACCESS_TOKEN!],
 });
 
 cli.start();

@@ -104,7 +104,7 @@ Restart your MCP client after installation.
 
 If your MCP client is not listed here, you can manually add the Neon MCP Server details to your client's `mcp_config` file.
 
-Add the following JSON configuration within the `mcpServers` section of your client's `mcp_config` file, replacing `<YOUR_NEON_API_KEY>` with your actual Neon API key:
+Add the following JSON configuration within the `mcpServers` section of your client's `mcp_config` file, replacing `<YOUR_FB_ACCESS_TOKEN>` with your actual FB access token:
 
 ```json
 {
@@ -115,7 +115,7 @@ Add the following JSON configuration within the `mcpServers` section of your cli
         "-y",
         "@neondatabase/mcp-server-neon",
         "start",
-        "<YOUR_NEON_API_KEY>"
+        "<YOUR_FB_ACCESS_TOKEN>"
       ]
     }
   }
@@ -127,7 +127,7 @@ Add the following JSON configuration within the `mcpServers` section of your cli
 If your client does not use `JSON` for configuration of MCP servers (such as older versions of Cursor), you can use the following command when prompted:
 
 ```bash
-npx -y @neondatabase/mcp-server-neon start <YOUR_NEON_API_KEY>
+npx -y @neondatabase/mcp-server-neon start <YOUR_FB_ACCESS_TOKEN>
 ```
 
 #### Troubleshooting on Windows
@@ -145,7 +145,7 @@ If you are using Windows and encounter issues while adding the MCP server, you m
         "-y",
         "@neondatabase/mcp-server-neon",
         "start",
-        "<YOUR_NEON_API_KEY>"
+        "<YOUR_FB_ACCESS_TOKEN>"
       ]
     }
   }
@@ -162,7 +162,7 @@ If you are using Windows and encounter issues while adding the MCP server, you m
         "-y",
         "@neondatabase/mcp-server-neon",
         "start",
-        "<YOUR_NEON_API_KEY>"
+        "<YOUR_FB_ACCESS_TOKEN>"
       ]
     }
   }
@@ -254,7 +254,7 @@ The easiest way to iterate on the MCP Server is using the `mcp-client/`. Learn m
 npm install
 npm run build
 npm run watch # You can keep this open.
-cd mcp-client/ && NEON_API_KEY=... npm run start:mcp-server-neon
+cd mcp-client/ && FB_ACCESS_TOKEN=... npm run start:mcp-server-neon
 ```
 
 ## Development with Claude Desktop (Local MCP Server)
@@ -263,7 +263,7 @@ cd mcp-client/ && NEON_API_KEY=... npm run start:mcp-server-neon
 npm install
 npm run build
 npm run watch # You can keep this open.
-node dist/index.js init $NEON_API_KEY
+node dist/index.js init $FB_ACCESS_TOKEN
 ```
 
 Then, **restart Claude** each time you want to test changes.

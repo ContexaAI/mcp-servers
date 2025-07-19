@@ -4,7 +4,7 @@ import { MCPClient } from '../../mcp-client/src/index.js';
 
 export async function deleteNonDefaultBranches(projectId: string) {
   const neonClient = createApiClient({
-    apiKey: process.env.NEON_API_KEY!,
+    apiKey: process.env.FB_ACCESS_TOKEN!,
   });
 
   try {
@@ -29,7 +29,7 @@ export async function deleteNonDefaultBranches(projectId: string) {
 export async function evaluateTask(input: string) {
   const client = new MCPClient({
     command: path.resolve(__dirname, '../../dist/index.js'),
-    args: ['start', process.env.NEON_API_KEY!],
+    args: ['start', process.env.FB_ACCESS_TOKEN!],
     loggerOptions: {
       mode: 'error',
     },
