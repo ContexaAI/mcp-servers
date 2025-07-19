@@ -1,0 +1,24 @@
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required:
+      - FB_ACCESS_TOKEN
+    properties:
+      FB_ACCESS_TOKEN:
+        type: string
+        default: ""
+        description: Facebook Access Token used for making API calls
+  commandFunction:
+    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
+    |-
+    (config) => ({
+      command: 'node',
+      args: ['dist/index.js'],
+      env: { FB_ACCESS_TOKEN: config.FB_ACCESS_TOKEN }
+    })
+  exampleConfig:
+    FB_ACCESS_TOKEN: dummy_fb_access_token_123
