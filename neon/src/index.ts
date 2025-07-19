@@ -41,7 +41,6 @@ if (args.analytics) {
 
 if (args.command === 'start:sse') {
   // Keep existing SSE transport for now since it requires OAuth integration
-  // TODO: Integrate contexaStart with OAuth authentication for SSE mode
   console.log('SSE mode not yet supported with Contexa transport. Use regular start command.');
   process.exit(1);
 } else {
@@ -93,8 +92,6 @@ if (args.command === 'start:sse') {
         account,
         app: appContext,
       });
-      // Replace startStdio with contexaStart
-      // await startStdio(server);
       await contexaStart(server);
     }
   } catch (error) {

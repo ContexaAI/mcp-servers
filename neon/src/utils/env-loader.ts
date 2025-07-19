@@ -36,7 +36,8 @@ export function loadJsonEnv(envPath: string = '.env'): void {
       }
     });
 
-    console.log(`✅ Loaded ${envVars.length} environment variables from JSON format`);
+    // Silently loaded - console output interferes with tools export
+    // console.log(`✅ Loaded ${envVars.length} environment variables from JSON format`);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     console.warn(`Warning: Could not load JSON environment file: ${errorMessage}`);
