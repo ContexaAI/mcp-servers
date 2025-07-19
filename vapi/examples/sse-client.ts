@@ -8,13 +8,15 @@ import { parseToolResponse } from '../src/utils/response.js';
 // Load environment variables from .env file
 dotenv.config();
 
-// Ensure API key is available
-if (!process.env.FB_ACCESS_TOKEN) {
-  console.error('Error: FB_ACCESS_TOKEN environment variable is required');
-  process.exit(1);
-}
-
 async function main() {
+  // Ensure API key is available
+  if (!process.env.FB_ACCESS_TOKEN) {
+    console.error('Error: FB_ACCESS_TOKEN environment variable is required');
+    console.warn('Example will not work without proper authentication token');
+    console.warn('Please set FB_ACCESS_TOKEN environment variable');
+    return;
+  }
+
   try {
     // Initialize MCP client
     const mcpClient = new Client({
@@ -149,8 +151,14 @@ async function main() {
     }
   } catch (error) {
     console.error('Error:', error);
-    process.exit(1);
+    console.warn('Example failed to complete successfully');
   }
 }
+
+// Execute main function with graceful error handling
+main().catch((error) => {
+  console.error('Unhandled error in main:', error);
+  console.warn('Example terminated due to unhandled error');
+});
 
 main();

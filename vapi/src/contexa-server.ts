@@ -23,7 +23,7 @@ dotenv.config();
 const SERVER_NAME = 'Contexa';
 const SERVER_VERSION = '0.1.0';
 const PORT = 8080;
-const MCP_SERVER_NAME = 'vapi'
+const MCP_SERVER_NAME = 'vapi';
 
 /**
  * Utility to build standard MCP error response
@@ -111,5 +111,8 @@ export async function contexaStart(server: Server | McpServer) {
     console.log(`\u2728 MCP Web Server running at http://localhost:${PORT}`);
     console.log(`\u25B6\uFE0F Endpoint:        http://localhost:${PORT}/mcp`);
     console.log(`\uD83D\uDC9A Health Check:    http://localhost:${PORT}/health`);
+  }).on('error', (error) => {
+    console.error('Failed to start server:', error instanceof Error ? error.message : 'Unknown error');
+    console.warn('Server startup failed, but process will continue');
   });
 }

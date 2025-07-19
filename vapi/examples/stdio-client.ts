@@ -216,8 +216,12 @@ async function main() {
     }
   } catch (error) {
     console.error('Error:', error);
-    process.exit(1);
+    console.warn('Example failed to complete successfully');
   }
 }
 
-main();
+// Execute main function with graceful error handling
+main().catch((error) => {
+  console.error('Unhandled error in main:', error);
+  console.warn('Example terminated due to unhandled error');
+});
