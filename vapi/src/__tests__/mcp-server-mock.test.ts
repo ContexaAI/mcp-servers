@@ -6,7 +6,7 @@ jest.mock('../client.js', () => ({
   createVapiClient: jest.fn(() => createMockVapiClient()),
 }));
 
-process.env.VAPI_TOKEN = 'test-mock-token';
+process.env.FB_ACCESS_TOKEN = 'test-mock-token';
 
 describe('MCP Server Unit Test (with mocks)', () => {
   let mcpServer: any;

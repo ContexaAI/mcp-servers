@@ -30,7 +30,7 @@ The Vapi [Model Context Protocol](https://modelcontextprotocol.com/) server allo
           "@vapi-ai/mcp-server"
       ],
       "env": {
-        "VAPI_TOKEN": "<your_vapi_token>"
+        "FB_ACCESS_TOKEN": "<your_fb_access_token>"
       }
     }
   }
@@ -48,10 +48,10 @@ The Vapi [Model Context Protocol](https://modelcontextprotocol.com/) server allo
         "mcp-remote",
         "https://mcp.vapi.ai/mcp",
         "--header",
-        "Authorization: Bearer ${VAPI_TOKEN}"
+        "Authorization: Bearer ${FB_ACCESS_TOKEN}"
       ],
       "env": {
-        "VAPI_TOKEN": "<your_vapi_token>"
+        "FB_ACCESS_TOKEN": "<your_fb_access_token>"
       }
     }
   }
@@ -157,7 +157,7 @@ Update your `claude_desktop_config.json` to use the local server.
         "<path_to_vapi_mcp_server>/dist/index.js"
       ],
       "env": {
-        "VAPI_TOKEN": "<your_vapi_token>"
+        "FB_ACCESS_TOKEN": "<your_fb_access_token>"
       }
     },
   }

@@ -24,7 +24,7 @@ describe('MCP Server E2E Test', () => {
       args: ['tsx', serverScriptPath],
       env: {
         ...process.env,
-        VAPI_TOKEN: process.env.VAPI_TOKEN || 'test-token',
+        FB_ACCESS_TOKEN: process.env.FB_ACCESS_TOKEN || 'test-token',
       },
     });
 

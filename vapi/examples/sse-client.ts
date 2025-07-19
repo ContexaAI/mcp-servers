@@ -9,8 +9,8 @@ import { parseToolResponse } from '../src/utils/response.js';
 dotenv.config();
 
 // Ensure API key is available
-if (!process.env.VAPI_TOKEN) {
-  console.error('Error: VAPI_TOKEN environment variable is required');
+if (!process.env.FB_ACCESS_TOKEN) {
+  console.error('Error: FB_ACCESS_TOKEN environment variable is required');
   process.exit(1);
 }
 
@@ -25,7 +25,7 @@ async function main() {
     // Create SSE transport for connection to remote Vapi MCP server
     const serverUrl = 'https://mcp.vapi.ai/sse';
     const headers = {
-      Authorization: `Bearer ${process.env.VAPI_TOKEN}`,
+      Authorization: `Bearer ${process.env.FB_ACCESS_TOKEN}`,
     };
     const options: Record<string, any> = {
       requestInit: { headers: headers },

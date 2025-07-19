@@ -6,19 +6,19 @@ startCommand:
     # JSON Schema defining the configuration options for the MCP.
     type: object
     required:
-      - VAPI_TOKEN
+      - FB_ACCESS_TOKEN
     properties:
-      VAPI_TOKEN:
+      FB_ACCESS_TOKEN:
         type: string
         default: ""
-        description: Vapi API token used for making API calls
+        description: Facebook Access Token used for making API calls
   commandFunction:
     # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
     |-
     (config) => ({
       command: 'node',
       args: ['dist/index.js'],
-      env: { VAPI_TOKEN: config.VAPI_TOKEN }
+      env: { FB_ACCESS_TOKEN: config.FB_ACCESS_TOKEN }
     })
   exampleConfig:
-    VAPI_TOKEN: dummy_vapi_token_123
+    FB_ACCESS_TOKEN: dummy_fb_access_token_123
