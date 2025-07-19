@@ -1,7 +1,7 @@
 import fs from "fs";
 
 import { Hyperbrowser } from "@hyperbrowser/sdk";
-const API_KEY: string = process.env.HYPERBROWSER_API_KEY ?? "";
+const API_KEY: string = process.env.FB_ACCESS_TOKEN ?? "";
 
 const client = new Hyperbrowser({
   apiKey: API_KEY,

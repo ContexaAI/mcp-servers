@@ -10,6 +10,7 @@ import { randomUUID } from 'crypto';
 import express, { Application, Request, Response } from 'express';
 
 import dotenv from 'dotenv';
+import { env } from './env.js';
 
 import {
   ConsoleAdapter,
@@ -22,7 +23,7 @@ dotenv.config();
 
 const SERVER_NAME = 'Contexa';
 const SERVER_VERSION = '0.1.0';
-const PORT = parseInt(process.env.PORT || '8080');
+const PORT = parseInt(env.get('PORT', '8080') || '8080');
 const MCP_SERVER_NAME = 'hyperbrowserai'
 
 /**

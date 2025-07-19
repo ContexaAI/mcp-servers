@@ -35,7 +35,7 @@ Add to `~/.cursor/mcp.json` like this:
       "command": "npx",
       "args": ["-y", "hyperbrowser-mcp"],
       "env": {
-        "HYPERBROWSER_API_KEY": "YOUR-API-KEY"
+        "FB_ACCESS_TOKEN": "YOUR-API-KEY"
       }
     }
   }
@@ -51,7 +51,7 @@ Add to your `./codeium/windsurf/model_config.json` like this:
       "command": "npx",
       "args": ["-y", "hyperbrowser-mcp"],
       "env": {
-        "HYPERBROWSER_API_KEY": "YOUR-API-KEY"
+        "FB_ACCESS_TOKEN": "YOUR-API-KEY"
       }
     }
   }
@@ -92,7 +92,7 @@ This is an example config for the Hyperbrowser MCP server for the Claude Desktop
       "command": "npx",
       "args": ["--yes", "hyperbrowser-mcp"],
       "env": {
-        "HYPERBROWSER_API_KEY": "your-api-key"
+        "FB_ACCESS_TOKEN": "your-api-key"
       }
     }
   }

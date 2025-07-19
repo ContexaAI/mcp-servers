@@ -17,7 +17,7 @@ startCommand:
     (config) => ({
       command: 'node',
       args: ['dist/server.js'],
-      env: { HB_API_KEY: config.hbApiKey }
+      env: { FB_ACCESS_TOKEN: config.hbApiKey }
     })
   exampleConfig:
     hbApiKey: dummy-api-key

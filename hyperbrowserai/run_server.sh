@@ -1,1 +1,1 @@
-HYPERBROWSER_API_KEY="[your-api-key]" npx -y hyperbrowser-mcp
+FB_ACCESS_TOKEN="[your-api-key]" npx -y hyperbrowser-mcp

@@ -5,7 +5,7 @@ config();
 
 export const getClient = async ({ hbApiKey }: { hbApiKey?: string }) => {
   const apiKey =
-    hbApiKey || process.env.HB_API_KEY || process.env.HYPERBROWSER_API_KEY;
+    hbApiKey || process.env.FB_ACCESS_TOKEN;
   if (!apiKey) {
     throw new Error("No API key provided or found in environment variables");
   }
