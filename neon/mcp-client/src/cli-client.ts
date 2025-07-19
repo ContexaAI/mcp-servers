@@ -28,17 +28,16 @@ export class MCPClientCLI {
         type: 'info',
       });
       this.logger.log(consoleStyles.separator + '\n', { type: 'info' });
-      this.client.start();
+      await this.client.start();
 
       await this.chat_loop();
     } catch (error) {
       this.logger.log('Failed to initialize tools: ' + error + '\n', {
         type: 'error',
       });
-      process.exit(1);
+      throw error;
     } finally {
       this.rl.close();
-      process.exit(0);
     }
   }
 

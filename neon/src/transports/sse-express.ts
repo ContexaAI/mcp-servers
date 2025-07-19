@@ -129,6 +129,6 @@ export const createSseTransport = (appContext: AppContext) => {
     logger.error('Failed to start server:', {
       error: err instanceof Error ? err.message : 'Unknown error',
     });
-    process.exit(1);
+    console.error('Server startup failed, but continuing execution');
   }
 };

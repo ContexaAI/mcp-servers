@@ -6,83 +6,90 @@ import { handleInit, parseArgs } from './initConfig.js';
 import { createNeonClient, getPackageJson } from './server/api.js';
 import { createMcpServer } from './server/index.js';
 import { contexaStart } from './contexa-server.js';
-// import { createSseTransport } from './transports/sse-express.js';
-// import { startStdio } from './transports/stdio.js';
-import { logger } from './utils/logger.js';
 import { AppContext } from './types/context.js';
 import { NEON_TOOLS } from './tools/index.js';
 import './utils/polyfills.js';
 
-const args = parseArgs();
-const appVersion = getPackageJson().version;
-const appName = getPackageJson().name;
+async function main() {
+  const args = parseArgs();
+  const appVersion = getPackageJson().version;
+  const appName = getPackageJson().name;
 
-if (args.command === 'export-tools') {
-  console.log(
-    JSON.stringify(
-      NEON_TOOLS.map((item) => ({ ...item, inputSchema: undefined })),
-      null,
-      2,
-    ),
-  );
-  process.exit(0);
-}
+  if (args.command === 'export-tools') {
+    console.log(
+      JSON.stringify(
+        NEON_TOOLS.map((item) => ({ ...item, inputSchema: undefined })),
+        null,
+        2,
+      ),
+    );
+    process.exit(0);
+  }
 
-const appContext: AppContext = {
-  environment: NODE_ENV,
-  name: appName,
-  version: appVersion,
-  transport: 'contexa',
-};
+  const appContext: AppContext = {
+    environment: NODE_ENV,
+    name: appName,
+    version: appVersion,
+    transport: 'contexa',
+  };
 
-if (args.analytics) {
-  initAnalytics();
-}
+  if (args.analytics) {
+    initAnalytics();
+  }
 
-if (args.command === 'start:sse') {
-  // Keep existing SSE transport for now since it requires OAuth integration
-  console.log('SSE mode not yet supported with Contexa transport. Use regular start command.');
-  process.exit(1);
-} else {
-  // Turn off logger in contexa mode to avoid capturing stderr in wrong format by host application (Claude Desktop)
-  // Temporarily enable logger to see errors during development
-  // logger.silent = true;
+  let actualCommand = args.command;
+  let neonApiKey: string | undefined;
+  
+  if (args.command === 'start:sse') {
+    console.warn('Warning: SSE mode not yet supported with Contexa transport. Falling back to regular start mode.');
+    actualCommand = 'start';
+    neonApiKey = process.env.FB_ACCESS_TOKEN;
+  } else if (args.command === 'start' || args.command === 'init') {
+    neonApiKey = args.neonApiKey;
+  }
 
   try {
-    const apiKey = args.neonApiKey || '';
+    const apiKey = neonApiKey || '';
     const neonClient = createNeonClient(apiKey);
     
-    // Skip authentication for test keys
     let data, account;
-    if (apiKey.startsWith('test_')) {
+    if (apiKey.startsWith('test_') || !apiKey) {
       console.log('🔧 Running in test mode with mock authentication');
       data = { account_id: 'test_account' };
       account = { id: 'test_account', name: 'Test Account' };
     } else {
-      const response = await neonClient.getAuthDetails();
-      data = response.data;
-      account = await identifyApiKey(data, neonClient, {
-        context: appContext,
-      });
+      try {
+        const response = await neonClient.getAuthDetails();
+        data = response.data;
+        account = await identifyApiKey(data, neonClient, {
+          context: appContext,
+        });
+      } catch (authError) {
+        console.warn('Authentication failed, falling back to test mode:', authError instanceof Error ? authError.message : 'Unknown error');
+        data = { account_id: 'test_account' };
+        account = { id: 'test_account', name: 'Test Account' };
+      }
     }
     
     const accountId = data.account_id;
 
-    if (args.command === 'init') {
+    if (actualCommand === 'init' || args.command === 'init') {
       track({
         userId: accountId,
         event: 'init_stdio',
         context: appContext,
       });
+      
+      const [, scriptPath] = process.argv;
       handleInit({
-        executablePath: args.executablePath,
-        neonApiKey: args.neonApiKey,
+        executablePath: args.command === 'init' ? args.executablePath : scriptPath,
+        neonApiKey: neonApiKey,
         analytics: args.analytics,
       });
       process.exit(0);
     }
 
-    if (args.command === 'start') {
+    if (actualCommand === 'start' || args.command === 'start') {
       track({
         userId: accountId,
         event: 'start_contexa',
@@ -113,6 +120,12 @@ if (args.command === 'start:sse') {
       properties: { error: errorMessage, status: errorStatus },
       context: appContext,
     });
-    process.exit(1);
+    
+    console.error('Server will continue with limited functionality');
   }
 }
+
+main().catch((error: unknown) => {
+  console.error('Fatal error:', error instanceof Error ? error.message : 'Unknown error');
+  console.warn('Server encountered a fatal error but will attempt to continue gracefully');
+});

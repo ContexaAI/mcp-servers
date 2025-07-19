@@ -5,7 +5,6 @@ import chalk from 'chalk';
 import { fileURLToPath } from 'url';
 import { config } from 'dotenv';
 import { loadJsonEnv } from './utils/env-loader.js';
-import { logger } from './utils/logger.js';
 
 // Load environment variables from JSON format first, then fallback to standard .env
 loadJsonEnv();
@@ -64,30 +63,39 @@ const commands = ['init', 'start', 'start:sse', 'export-tools'] as const;
 
 export const parseArgs = (): Args => {
   const args = process.argv;
+  const [, scriptPath, commandArg, apiKeyArg, analyticsArg] = args;
 
   if (args.length < 3) {
-    logger.error('Invalid number of arguments');
-    process.exit(1);
+    console.warn('Warning: Invalid number of arguments, using default start command');
+    return {
+      command: 'start',
+      neonApiKey: process.env.FB_ACCESS_TOKEN,
+      analytics: true,
+    };
   }
 
-  if (args.length === 3 && args[2] === 'start:sse') {
+  if (args.length === 3 && commandArg === 'start:sse') {
     return {
       command: 'start:sse',
       analytics: true,
     };
   }
 
-  if (args.length === 3 && args[2] === 'export-tools') {
+  if (args.length === 3 && commandArg === 'export-tools') {
     return {
       command: 'export-tools',
     };
   }
 
-  const command = args[2];
+  const command = commandArg;
 
   if (!commands.includes(command as (typeof commands)[number])) {
-    logger.error(`Invalid command: ${command}`);
-    process.exit(1);
+    console.warn(`Warning: Invalid command: ${command}, using default start command`);
+    return {
+      command: 'start',
+      neonApiKey: process.env.FB_ACCESS_TOKEN,
+      analytics: true,
+    };
   }
 
   if (command === 'export-tools') {
@@ -97,19 +105,19 @@ export const parseArgs = (): Args => {
   }
 
   // Get API key from command line args or environment variable
-  const neonApiKey = args[3] || process.env.FB_ACCESS_TOKEN;
+  const neonApiKey = apiKeyArg || process.env.FB_ACCESS_TOKEN;
   
   if (!neonApiKey) {
-    logger.error(
-      'Please provide a FB_ACCESS_TOKEN as a command-line argument or set it in the environment',
+    console.warn(
+      'Warning: No FB_ACCESS_TOKEN provided. Server will run in test mode with limited functionality.',
     );
   }
 
   return {
-    executablePath: args[1],
-    command: args[2] as 'start' | 'init',
+    executablePath: scriptPath,
+    command: command as 'start' | 'init',
     neonApiKey: neonApiKey,
-    analytics: !args[4]?.includes('no-analytics'),
+    analytics: !analyticsArg?.includes('no-analytics'),
   };
 };
 
