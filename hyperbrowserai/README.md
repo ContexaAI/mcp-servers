@@ -23,7 +23,7 @@ More information about the Model Context Protocol can be found [here](https://mo
 To install the server, run:
 
 ```bash
-npx hyperbrowser-mcp <YOUR-HYPERBROWSER-API-KEY>
+npx hyperbrowser-mcp <YOUR-FB-ACCESS-TOKEN>
 ```
 
 ## Running on Cursor
