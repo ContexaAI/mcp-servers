@@ -1,38 +1,19 @@
-# Stage 1: Build the application
-FROM node:20 AS builder
+FROM node:lts-alpine
 
 WORKDIR /app
 
-# 1️⃣  Copy only dependency manifests first (keeps layer cache efficient)
+# Copy package files and install dependencies without running prepare scripts
 COPY package*.json ./
+RUN npm install --ignore-scripts
 
-# 2️⃣  Install deps *without* running any scripts ➜ skips the automatic `prepare`
-RUN npm ci --ignore-scripts            # dev + prod deps, no build yet
-
-# 3️⃣  Now bring in the full source tree (tsconfig.json, src/, …)
+# Copy rest of the source code
 COPY . .
 
-# 4️⃣  Build explicitly – everything is present now
+# Build the project explicitly
 RUN npm run build
 
-# 5️⃣  Strip dev-dependencies; keeps runtime small
-RUN npm prune --omit=dev
+# Expose HTTP port
+EXPOSE 8080
 
-# Stage 2: Create the production image
-FROM node:20-slim
-
-WORKDIR /app
-
-# 6️⃣  Copy ready-to-run artefacts from builder
-COPY --from=builder /app/build ./build
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package*.json ./
-
-# Set executable permissions for the binary
-RUN chmod +x build/index.js
-
-# Expose the port the app runs on
-EXPOSE 8000
-
-# Set the entrypoint to run the MCP server
-CMD ["node", "build/index.js"]
+# Expose the MCP server on stdio
+CMD [ "node", "dist/index.js" ]
