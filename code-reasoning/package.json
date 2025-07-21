@@ -1,0 +1,92 @@
+{
+  "name": "@mettamatt/code-reasoning",
+  "version": "0.7.0",
+  "description": "Enhanced MCP server for code reasoning using sequential thinking methodology, optimized for programming tasks",
+  "author": "Matt Westgate",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "code-reasoning",
+    "sequential-thinking",
+    "programming",
+    "claude",
+    "ai",
+    "coding-assistant",
+    "reasoning",
+    "problem-solving",
+    "systematic-thinking",
+    "code-analysis",
+    "debugging",
+    "anthropic",
+    "llm-tools",
+    "branching",
+    "revision",
+    "reflective-thinking"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mettamatt/code-reasoning.git"
+  },
+  "bin": {
+    "code-reasoning": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rimraf dist && tsc",
+    "clean": "rimraf dist",
+    "clean:build": "npm run clean && npm run build",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "debug": "node dist/index.js --debug",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write \"**/*.{ts,js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,js,json,md}\"",
+    "validate": "run-s format lint:fix build",
+    "prepare": "npm run build",
+    "pretest": "tsc",
+    "reset:evaluations": "rimraf test/prompt-evaluation/reports && mkdir -p test/prompt-evaluation/reports",
+    "test": "node dist/test/code-reasoning.e2e.js basic",
+    "test:basic": "node dist/test/code-reasoning.e2e.js basic",
+    "test:branch": "node dist/test/code-reasoning.e2e.js branch",
+    "test:revision": "node dist/test/code-reasoning.e2e.js revision",
+    "test:error": "node dist/test/code-reasoning.e2e.js error",
+    "test:perf": "node dist/test/code-reasoning.e2e.js perf",
+    "test:validate": "run-s validate test",
+    "test:verbose": "node dist/test/code-reasoning.e2e.js --verbose",
+    "test:all": "node dist/test/code-reasoning.e2e.js all",
+    "eval": "node dist/test/prompt-evaluation/evaluator.js",
+    "eval:view": "node dist/test/prompt-evaluation/evaluator.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.11.2",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "chalk": "^5.3.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mcp-trace": "^0.1.8",
+    "rimraf": "^5.0.5",
+    "zod-to-json-schema": "^3.24.5"
+  },
+  "devDependencies": {
+    "@anthropic-ai/sdk": "^0.54.0",
+    "@eslint/js": "^9.26.0",
+    "@types/node": "^22.15.17",
+    "@typescript-eslint/eslint-plugin": "^8.32.1",
+    "@typescript-eslint/parser": "^8.32.1",
+    "dotenv": "^16.5.0",
+    "eslint": "^9.26.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.2.6",
+    "globals": "^16.1.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.5.3",
+    "typescript": "^5.3.3"
+  }
+}
