@@ -22,7 +22,7 @@ export async function handleCompletionRequest({
 }): Promise<CompleteResult> {
   if (!client || !db) {
     console.warn("MongoDB connection is not available");
-cls    return emptyCompletionResult();
+    return emptyCompletionResult();
   }
   const { ref, argument } = request.params;
 
