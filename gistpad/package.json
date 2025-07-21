@@ -1,0 +1,43 @@
+{
+  "name": "gistpad-mcp",
+  "version": "0.4.8",
+  "description": "An MCP server for managing your personal knowledge, daily notes, and reusable prompts via GitHub Gists.",
+  "type": "module",
+  "bin": {
+    "gistpad-mcp": "./build/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lostintangent/gistpad-mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/lostintangent/gistpad-mcp/issues"
+  },
+  "homepage": "https://github.com/lostintangent/gistpad-mcp#readme",
+  "license": "MIT",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "prepare": "npm run build",
+    "watch": "tsc --watch",
+    "inspector": "npx @modelcontextprotocol/inspector build/index.js",
+    "start": "node build/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.15.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "axios": "^1.10.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "gray-matter": "^4.0.3",
+    "mcp-trace": "^0.1.8",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "typescript": "^5.8.3"
+  }
+}
