@@ -1,0 +1,48 @@
+{
+  "name": "bazi-mcp",
+  "version": "0.0.25",
+  "type": "module",
+  "devDependencies": {
+    "@tsconfig/node22": "^22.0.1",
+    "@types/node": "^22.14.1",
+    "rimraf": "^5.0.10",
+    "typescript": "^5.8.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cantian-ai/bazi-mcp.git"
+  },
+  "keywords": [
+    "bazi",
+    "八字",
+    "mcp",
+    "算命",
+    "命理"
+  ],
+  "license": "ISC",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "tsc": "rimraf dist && tsc",
+    "build": "npm run tsc",
+    "start": "node dist/stdio.js",
+    "prepublishOnly": "npm run tsc && chmod +x dist/stdio.js"
+  },
+  "bin": {
+    "bazi-mcp": "./dist/stdio.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.10.2",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "cors": "^2.8.5",
+    "date-fns": "^3.6.0",
+    "date-fns-tz": "^3.2.0",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "mcp-trace": "^0.1.8",
+    "tyme4ts": "^1.3.3",
+    "zod": "^3.24.3"
+  }
+}
