@@ -1,0 +1,6 @@
+.aider*
+coverage/*
+.env
+dist/
+node_modules/
+OPENAPI_ISSUE*

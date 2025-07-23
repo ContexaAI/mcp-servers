@@ -1,0 +1,265 @@
+[
+    {
+      "name": "searchCoinGecko",
+      "description": "Search for coins by ticker symbol OR name to get their CoinGecko ID. IMPORTANT: Only search with one term - either ticker (e.g., 'BTC', 'BERA') or name (e.g., 'Bitcoin', 'Berachain'), but not both. $ symbol will be automatically removed from tickers. Use this first to find the coin's CoinGecko ID before querying detailed information.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query (e.g., 'BTC' or 'Bitcoin', but not 'BTC Bitcoin')"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "getCoinGeckoPrices",
+      "description": "Get current prices of tokens using their CoinGecko IDs. Must provide valid CoinGecko IDs (use searchCoinGecko to find IDs first).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of CoinGecko token IDs"
+          },
+          "vsCurrencies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of currencies to get prices in (e.g., ['usd', 'eur'])"
+          },
+          "includeMarketCap": {
+            "type": "boolean",
+            "description": "Include market cap data"
+          },
+          "include24hrVol": {
+            "type": "boolean",
+            "description": "Include 24h volume data"
+          },
+          "include24hrChange": {
+            "type": "boolean",
+            "description": "Include 24h price change data"
+          },
+          "includeLastUpdatedAt": {
+            "type": "boolean",
+            "description": "Include last updated timestamp"
+          }
+        },
+        "required": [
+          "ids",
+          "vsCurrencies"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "getCoinInfoByCoingeckoId",
+      "description": "Look up contract addresses and chain information for a token using its CoinGecko ID. Use searchCoinGecko first to find the correct CoinGecko ID before using this tool.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "CoinGecko coin ID (get this from searchCoinGecko)"
+          },
+          "marketData": {
+            "type": "boolean",
+            "description": "Include market data"
+          },
+          "localization": {
+            "type": "boolean",
+            "description": "Include localized data"
+          },
+          "tickers": {
+            "type": "boolean",
+            "description": "Include ticker data"
+          },
+          "communityData": {
+            "type": "boolean",
+            "description": "Include community data"
+          },
+          "developerData": {
+            "type": "boolean",
+            "description": "Include developer data"
+          },
+          "sparkline": {
+            "type": "boolean",
+            "description": "Include sparkline data"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "getRubicSupportedChains",
+      "description": "Get a list of all blockchains supported by Rubic for cross-chain bridging.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "includeTestnets": {
+            "type": "boolean",
+            "description": "Include testnet blockchains in the results."
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "getRubicBridgeQuote",
+      "description": "Get the best cross-chain bridge route for swapping tokens between different blockchains.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "srcTokenAddress": {
+            "type": "string",
+            "description": "Source token address. Use 0x0000000000000000000000000000000000000000 for native tokens like ETH, BNB, etc."
+          },
+          "srcTokenBlockchain": {
+            "type": "string",
+            "description": "Source blockchain name (e.g., ETH, BSC, POLYGON, etc.)"
+          },
+          "srcTokenAmount": {
+            "type": "string",
+            "description": "Amount of source token to bridge (as a string with decimals)"
+          },
+          "dstTokenAddress": {
+            "type": "string",
+            "description": "Destination token address. Use 0x0000000000000000000000000000000000000000 for native tokens."
+          },
+          "dstTokenBlockchain": {
+            "type": "string",
+            "description": "Destination blockchain name (e.g., ETH, BSC, POLYGON, etc.)"
+          },
+          "walletAddress": {
+            "type": "string",
+            "description": "Wallet address to send tokens to on the destination blockchain"
+          },
+          "slippageTolerance": {
+            "type": "number",
+            "minimum": 0.01,
+            "maximum": 50,
+            "description": "Slippage tolerance in percentage (min: 0.01, max: 50)"
+          },
+          "showFailedRoutes": {
+            "type": "boolean",
+            "description": "Show failed routes in the response"
+          },
+          "includeTestnets": {
+            "type": "boolean",
+            "description": "Include testnets in calculations"
+          },
+          "timeout": {
+            "type": "number",
+            "minimum": 5,
+            "maximum": 60,
+            "description": "Calculation timeout in seconds (min: 5, max: 60)"
+          }
+        },
+        "required": [
+          "srcTokenAddress",
+          "srcTokenBlockchain",
+          "srcTokenAmount",
+          "dstTokenAddress",
+          "dstTokenBlockchain"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "getRubicBridgeQuotes",
+      "description": "Get all available cross-chain bridge routes for swapping tokens between different blockchains.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "srcTokenAddress": {
+            "type": "string",
+            "description": "Source token address. Use 0x0000000000000000000000000000000000000000 for native tokens like ETH, BNB, etc."
+          },
+          "srcTokenBlockchain": {
+            "type": "string",
+            "description": "Source blockchain name (e.g., ETH, BSC, POLYGON, etc.)"
+          },
+          "srcTokenAmount": {
+            "type": "string",
+            "description": "Amount of source token to bridge (as a string with decimals)"
+          },
+          "dstTokenAddress": {
+            "type": "string",
+            "description": "Destination token address. Use 0x0000000000000000000000000000000000000000 for native tokens."
+          },
+          "dstTokenBlockchain": {
+            "type": "string",
+            "description": "Destination blockchain name (e.g., ETH, BSC, POLYGON, etc.)"
+          },
+          "walletAddress": {
+            "type": "string",
+            "description": "Wallet address to send tokens to on the destination blockchain"
+          },
+          "slippageTolerance": {
+            "type": "number",
+            "minimum": 0.01,
+            "maximum": 50,
+            "description": "Slippage tolerance in percentage (min: 0.01, max: 50)"
+          },
+          "showFailedRoutes": {
+            "type": "boolean",
+            "description": "Show failed routes in the response"
+          },
+          "includeTestnets": {
+            "type": "boolean",
+            "description": "Include testnets in calculations"
+          },
+          "timeout": {
+            "type": "number",
+            "minimum": 5,
+            "maximum": 60,
+            "description": "Calculation timeout in seconds (min: 5, max: 60)"
+          }
+        },
+        "required": [
+          "srcTokenAddress",
+          "srcTokenBlockchain",
+          "srcTokenAmount",
+          "dstTokenAddress",
+          "dstTokenBlockchain"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "getRubicBridgeStatus",
+      "description": "Check the status of a cross-chain bridge transaction.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "srcTxHash": {
+            "type": "string",
+            "description": "Source transaction hash to check status"
+          }
+        },
+        "required": [
+          "srcTxHash"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    }
+  ]
+  
