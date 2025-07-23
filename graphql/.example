@@ -1,0 +1,32 @@
+[
+  {
+    "key": "NAME",
+    "value": "mcp-graphql",
+    "required": false,
+    "label": "NAME"
+  },
+  {
+    "key": "ENDPOINT",
+    "value": "http://localhost:4000/graphql",
+    "required": false,
+    "label": "ENDPOINT"
+  },
+  {
+    "key": "ALLOW_MUTATIONS",
+    "value": "false",
+    "required": false,
+    "label": "ALLOW_MUTATIONS"
+  },
+  {
+    "key": "HEADERS",
+    "value": "{}",
+    "required": false,
+    "label": "HEADERS"
+  },
+  {
+    "key": "SCHEMA",
+    "value": null,
+    "required": false,
+    "label": "SCHEMA"
+  }
+]

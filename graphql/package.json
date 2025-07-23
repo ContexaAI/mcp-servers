@@ -1,0 +1,41 @@
+{
+	"name": "mcp-graphql",
+	"module": "index.ts",
+	"type": "module",
+	"version": "2.0.4",
+	"repository": "github:blurrah/mcp-graphql",
+	"license": "MIT",
+	"bin": {
+		"mcp-graphql": "./dist/index.js"
+	},
+	"files": [
+		"dist"
+	],
+	"devDependencies": {
+		"@graphql-tools/schema": "^10.0.23",
+		"@types/cors": "^2.8.19",
+		"@types/dotenv": "^8.2.0",
+		"@types/node": "^20.0.0",
+		"@types/yargs": "17.0.33",
+		"graphql-yoga": "^5.13.5",
+		"tsx": "^4.0.0",
+		"typescript": "5.8.3"
+	},
+	"dependencies": {
+		"@modelcontextprotocol/sdk": "1.12.0",
+		"@types/express": "^5.0.3",
+		"cors": "^2.8.5",
+		"dotenv": "^16.4.0",
+		"express": "^5.1.0",
+		"graphql": "^16.11.0",
+		"mcp-trace": "^0.1.8",
+		"yargs": "17.7.2",
+		"zod": "3.25.30",
+		"zod-to-json-schema": "3.24.5"
+	},
+	"scripts": {
+		"dev": "tsx watch src/index.ts",
+		"build": "tsc",
+		"start": "node dist/index.js"
+		}
+}
