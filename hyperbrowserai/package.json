@@ -13,14 +13,14 @@
     "access": "public"
   },
   "scripts": {
-    "build": "if exist dist rmdir /s /q dist && tsc",
+    "build": "rm -rf dist && tsc",
     "start": "node dist/server.js",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
     "format": "prettier --write .",
-    "build-resources": "node --loader ts-node/esm scripts/build_resources.ts && copy summarized.json src\\resources\\static\\data\\summarized.json && del summarized.json && del static_data.json",
+    "build-resources": "node --loader ts-node/esm scripts/build_resources.ts && cp summarized.json src/resources/static/data/summarized.json && rm -f summarized.json static_data.json",
     "prepare": "npm run build",
-    "publish": "if exist dist rmdir /s /q dist && if exist node_modules rmdir /s /q node_modules && npm i && npm run build && npm publish"
+    "publish": "rm -rf dist node_modules && npm i && npm run build && npm publish"
   },
   "dependencies": {
     "@hyperbrowser/sdk": "^0.48.1",

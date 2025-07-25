@@ -1,6 +1,7 @@
 import { CrawledPage } from "@hyperbrowser/sdk/types";
 import fs from "fs";
 import { OpenAI } from "openai";
+import { env } from "../src/env.js";
 
 type BasicSummary = {
   pathname: string;
@@ -14,7 +15,7 @@ type Summary = {
 };
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: env.getRequired("OPENAI_API_KEY"),
 });
 
 export const summarize = async (inputPath: string, outputPath: string) => {

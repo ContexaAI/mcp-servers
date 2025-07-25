@@ -3,7 +3,7 @@ import * as path from 'path';
 
 interface EnvVariable {
   key: string;
-  value: string;
+  value: string | null;
   required: boolean;
   label: string;
 }
@@ -28,7 +28,7 @@ class EnvManager {
         
         for (const envVar of envVariables) {
           // Use the value from .env if set, otherwise use process.env, otherwise use the default value
-          const value = envVar.value || process.env[envVar.key] || '';
+          const value = envVar.value !== null ? envVar.value : (process.env[envVar.key] || '');
           
           if (envVar.required && !value) {
             throw new Error(`Required environment variable ${envVar.key} is not set`);

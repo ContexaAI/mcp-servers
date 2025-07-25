@@ -1,7 +1,8 @@
 import fs from "fs";
-
 import { Hyperbrowser } from "@hyperbrowser/sdk";
-const API_KEY: string = process.env.FB_ACCESS_TOKEN ?? "";
+import { env } from "../src/env.js";
+
+const API_KEY: string = env.getRequired("FB_ACCESS_TOKEN");
 
 const client = new Hyperbrowser({
   apiKey: API_KEY,
