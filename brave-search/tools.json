@@ -1,0 +1,188 @@
+[
+    {
+      "name": "brave_image_search",
+      "description": "A tool for searching the web for images using the Brave Search API.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "searchTerm": {
+            "type": "string",
+            "description": "The term to search the internet for images of"
+          },
+          "count": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 3,
+            "default": 1,
+            "description": "The number of images to search for, minimum 1, maximum 3"
+          }
+        },
+        "required": [
+          "searchTerm"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "brave_web_search",
+      "description": "Performs a web search using the Brave Search API, ideal for general queries, and online content. Use this for broad information gathering, recent events, or when you need diverse web sources. Maximum 20 results per request ",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The term to search the internet for"
+          },
+          "count": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 20,
+            "default": 10,
+            "description": "The number of results to return, minimum 1, maximum 20"
+          },
+          "offset": {
+            "type": "number",
+            "minimum": 0,
+            "default": 0,
+            "description": "The offset for pagination, minimum 0"
+          },
+          "freshness": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "pd",
+                  "pw",
+                  "pm",
+                  "py"
+                ]
+              },
+              {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}to\\d{4}-\\d{2}-\\d{2}$"
+              }
+            ],
+            "description": "Filters search results by when they were discovered.\nThe following values are supported:\n- pd: Discovered within the last 24 hours.\n- pw: Discovered within the last 7 Days.\n- pm: Discovered within the last 31 Days.\n- py: Discovered within the last 365 Days.\n- YYYY-MM-DDtoYYYY-MM-DD: Custom date range (e.g., 2022-04-01to2022-07-30)"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "brave_local_search",
+      "description": "Searches for local businesses and places using Brave's Local Search API. Best for queries related to physical locations, businesses, restaurants, services, etc. Returns detailed information including:\n- Business names and addresses\n- Ratings and review counts\n- Phone numbers and opening hours\nUse this when the query implies 'near me' or mentions specific locations. Automatically falls back to web search if no local results are found.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Local search query (e.g. 'pizza near Central Park')"
+          },
+          "count": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 20,
+            "default": 10,
+            "description": "The number of results to return, minimum 1, maximum 20"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "brave_news_search",
+      "description": "Searches for news articles using the Brave Search API. Use this for recent events, trending topics, or specific news stories. Returns a list of articles with titles, URLs, and descriptions. Maximum 20 results per request.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The term to search the internet for news articles, trending topics, or recent events"
+          },
+          "count": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 20,
+            "default": 10,
+            "description": "The number of results to return, minimum 1, maximum 20"
+          },
+          "freshness": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "pd",
+                  "pw",
+                  "pm",
+                  "py"
+                ]
+              },
+              {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}to\\d{4}-\\d{2}-\\d{2}$"
+              }
+            ],
+            "description": "Filters search results by when they were discovered.\nThe following values are supported:\n- pd: Discovered within the last 24 hours.\n- pw: Discovered within the last 7 Days.\n- pm: Discovered within the last 31 Days.\n- py: Discovered within the last 365 Days.\n- YYYY-MM-DDtoYYYY-MM-DD: Custom date range (e.g., 2022-04-01to2022-07-30)"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "brave_video_search",
+      "description": "Searches for videos using the Brave Search API. Use this for video content, tutorials, or any media-related queries. Returns a list of videos with titles, URLs, and descriptions. Maximum 20 results per request.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The term to search the internet for videos of"
+          },
+          "count": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 20,
+            "default": 10,
+            "description": "The number of results to return, minimum 1, maximum 20"
+          },
+          "freshness": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "pd",
+                  "pw",
+                  "pm",
+                  "py"
+                ]
+              },
+              {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}to\\d{4}-\\d{2}-\\d{2}$"
+              }
+            ],
+            "description": "Filters search results by when they were discovered.\nThe following values are supported:\n- pd: Discovered within the last 24 hours.\n- pw: Discovered within the last 7 Days.\n- pm: Discovered within the last 31 Days.\n- py: Discovered within the last 365 Days.\n- YYYY-MM-DDtoYYYY-MM-DD: Custom date range (e.g., 2022-04-01to2022-07-30)"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    }
+  ]
+  
