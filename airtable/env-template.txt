@@ -1,0 +1,28 @@
+# Airtable API Configuration
+# Required: Your Airtable personal access token
+# Get your token from: https://airtable.com/create/tokens
+AIRTABLE_API_KEY=pat123.abc123_your_actual_token_here
+
+# Server Configuration
+# Port number for the HTTP server
+PORT=8080
+
+# Server name shown in responses
+SERVER_NAME=Contexa
+
+# Server version
+SERVER_VERSION=0.1.0
+
+# Contexa Trace Configuration
+# Enable/disable tracing middleware
+CONTEXA_TRACE_ENABLED=true
+
+# Server ID for tracing
+CONTEXA_SERVER_ID=airtable-mcp-server
+
+# Development Configuration
+# Environment mode (development, production, test)
+NODE_ENV=development
+
+# Enable debug logging
+DEBUG_MODE=false 

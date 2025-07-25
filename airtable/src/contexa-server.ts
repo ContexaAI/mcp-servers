@@ -10,6 +10,7 @@ import { randomUUID } from 'crypto';
 import express, { Application, Request, Response } from 'express';
 
 import dotenv from 'dotenv';
+import { getEnvVar } from './config.js';
 
 import {
   ConsoleAdapter,
@@ -20,9 +21,9 @@ import {
 
 dotenv.config();
 
-const SERVER_NAME = 'Contexa';
-const SERVER_VERSION = '0.1.0';
-const PORT = 8080;
+const SERVER_NAME = getEnvVar('SERVER_NAME', 'Contexa');
+const SERVER_VERSION = getEnvVar('SERVER_VERSION', '0.1.0');
+const PORT = parseInt(getEnvVar('PORT', '8080'), 10);
 const MCP_SERVER_NAME = 'airtable';
 
 /**

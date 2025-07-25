@@ -17,6 +17,8 @@
   "bin": "dist/index.js",
   "scripts": {
     "start": "npm run build && node ./dist/index.js",
+    "setup": "node setup-env.js create",
+    "setup:config": "node setup-env.js config",
     "test": "vitest run",
     "test:watch": "vitest --watch",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",

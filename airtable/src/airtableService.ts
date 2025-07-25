@@ -1,5 +1,6 @@
 import nodeFetch, { RequestInit } from 'node-fetch';
 import { z } from 'zod';
+import { getEnvVar } from './config.js';
 import {
   IAirtableService,
   ListBasesResponse,
@@ -23,12 +24,14 @@ export class AirtableService implements IAirtableService {
   private readonly fetch: typeof nodeFetch;
 
   constructor(
-    apiKey: string = process.env.AIRTABLE_API_KEY || '',
+    apiKey: string = getEnvVar('AIRTABLE_API_KEY', ''),
     baseUrl: string = 'https://api.airtable.com',
     fetch: typeof nodeFetch = nodeFetch,
   ) {
     if (!apiKey) {
-      throw new Error('airtable-mcp-server: No API key provided. Set it in the `AIRTABLE_API_KEY` environment variable');
+      console.warn('⚠️  Warning: No API key provided. Airtable operations will fail.');
+      console.warn('Set AIRTABLE_API_KEY in your .env file or environment variables.');
+      console.warn('Get your token from: https://airtable.com/create/tokens');
     }
 
     this.apiKey = apiKey;
