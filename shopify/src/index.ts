@@ -33,10 +33,21 @@ function loadEnvFromJSON() {
       
       // Set environment variables from JSON
       envVars.forEach((envVar: any) => {
-        if (envVar.key && envVar.value && envVar.value !== null && envVar.value !== "") {
+        if (envVar.key && envVar.value !== null && envVar.value !== undefined) {
           process.env[envVar.key] = envVar.value;
         }
       });
+      
+      // Validate required environment variables
+      const missingRequired = envVars
+        .filter((envVar: any) => envVar.required && (!envVar.value || envVar.value === null))
+        .map((envVar: any) => envVar.key);
+      
+      if (missingRequired.length > 0) {
+        console.warn(`⚠️  Warning: Missing required environment variables: ${missingRequired.join(', ')}`);
+        console.warn("Please set these variables in your .env file or provide them via command line arguments.");
+        console.warn("Server will continue but may not function properly without these variables.");
+      }
     }
   } catch (error) {
     // If JSON parsing fails, fall back to dotenv
@@ -57,17 +68,19 @@ const MYSHOPIFY_DOMAIN = argv.domain || process.env.MYSHOPIFY_DOMAIN;
 process.env.SHOPIFY_ACCESS_TOKEN = SHOPIFY_ACCESS_TOKEN;
 process.env.MYSHOPIFY_DOMAIN = MYSHOPIFY_DOMAIN;
 
-// Validate required environment variables
+// Validate required environment variables (fallback for non-JSON format)
 if (!SHOPIFY_ACCESS_TOKEN) {
-  console.error("Error: SHOPIFY_ACCESS_TOKEN is required.");
-  console.error("Please provide it via command line argument or .env file.");
-  console.error("  Command line: --accessToken=your_token");
+  console.warn("⚠️  Warning: SHOPIFY_ACCESS_TOKEN is required.");
+  console.warn("Please provide it via command line argument or .env file.");
+  console.warn("  Command line: --accessToken=your_token");
+  console.warn("Server will continue but may not function properly without this variable.");
 }
 
 if (!MYSHOPIFY_DOMAIN) {
-  console.error("Error: MYSHOPIFY_DOMAIN is required.");
-  console.error("Please provide it via command line argument or .env file.");
-  console.error("  Command line: --domain=your-store.myshopify.com");
+  console.warn("⚠️  Warning: MYSHOPIFY_DOMAIN is required.");
+  console.warn("Please provide it via command line argument or .env file.");
+  console.warn("  Command line: --domain=your-store.myshopify.com");
+  console.warn("Server will continue but may not function properly without this variable.");
 }
 
 // Create Shopify GraphQL client

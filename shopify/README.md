@@ -75,17 +75,31 @@ Locations for the Claude Desktop config file:
 
 If you prefer to use environment variables instead of command-line arguments:
 
-1. Create a `.env` file with your Shopify credentials:
+1. Create a `.env` file with your Shopify credentials in JSON format:
 
-   ```
-   SHOPIFY_ACCESS_TOKEN=your_access_token
-   MYSHOPIFY_DOMAIN=your-store.myshopify.com
+   ```json
+   [
+     {
+       "key": "SHOPIFY_ACCESS_TOKEN",
+       "value": "your_access_token",
+       "required": true,
+       "label": "SHOPIFY_ACCESS_TOKEN"
+     },
+     {
+       "key": "MYSHOPIFY_DOMAIN",
+       "value": "your-store.myshopify.com",
+       "required": true,
+       "label": "MYSHOPIFY_DOMAIN"
+     }
+   ]
    ```
 
 2. Run the server with npx:
    ```
    npx shopify-mcp
    ```
+
+**Note:** The server also supports traditional dotenv format as a fallback if JSON parsing fails.
 
 ### Direct Installation (Optional)
 
