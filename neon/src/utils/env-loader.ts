@@ -2,7 +2,7 @@ import fs from 'node:fs';
 
 type EnvVariable = {
   key: string;
-  value: string;
+  value: string | null;
   required: boolean;
   label: string;
 };
@@ -29,7 +29,7 @@ export function loadJsonEnv(envPath = '.env'): void {
 
     // Set environment variables from JSON format
     envVars.forEach((envVar) => {
-      if (envVar.value && !process.env[envVar.key]) {
+      if (envVar.value !== null && !process.env[envVar.key]) {
         process.env[envVar.key] = envVar.value;
       }
     });

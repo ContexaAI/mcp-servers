@@ -11,6 +11,7 @@ import express, { Application, Request, Response } from 'express';
 
 import dotenv from 'dotenv';
 import { loadJsonEnv } from './utils/env-loader.js';
+import { getEnvVar } from './utils/env-loader.js';
 
 import {
   ConsoleAdapter,
@@ -23,9 +24,9 @@ import {
 loadJsonEnv();
 dotenv.config();
 
-const SERVER_NAME = 'Contexa';
-const SERVER_VERSION = '0.1.0';
-const PORT = 8080;
+const SERVER_NAME = getEnvVar('SERVER_NAME', 'Contexa') || 'Contexa';
+const SERVER_VERSION = getEnvVar('SERVER_VERSION', '0.1.0') || '0.1.0';
+const PORT = parseInt(getEnvVar('PORT', '8080') || '8080', 10);
 const MCP_SERVER_NAME = 'neon'
 /**
  * Utility to build standard MCP error response

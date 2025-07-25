@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import { fileURLToPath } from 'url';
 import { config } from 'dotenv';
 import { loadJsonEnv } from './utils/env-loader.js';
+import { getEnvVar } from './utils/env-loader.js';
 
 // Load environment variables from JSON format first, then fallback to standard .env
 loadJsonEnv();
