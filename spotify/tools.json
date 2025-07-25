@@ -1,0 +1,283 @@
+[
+    {
+      "name": "get_environment_info",
+      "description": "Get information about the connected Dynatrace Environment (Tenant)",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "list_vulnerabilities",
+      "description": "List all vulnerabilities from Dynatrace",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get_vulnerabilty_details",
+      "description": "Get details of a vulnerability by `securityProblemId` on Dynatrace",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "securityProblemId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "list_problems",
+      "description": "List all problems (dt.davis.problems) known on Dynatrace, sorted by their recency, for the last 12h. An additional filter can be provided using DQL filter.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "additionalFilter": {
+            "type": "string",
+            "description": "Additional filter for DQL statement for dt.davis.problems, e.g., 'entity_tags == array(\"dt.owner:team-foobar\", \"tag:tag\")'"
+          },
+          "maxProblemsToDisplay": {
+            "type": "number",
+            "default": 10,
+            "description": "Maximum number of problems to display in the response."
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "find_entity_by_name",
+      "description": "Get the entityId of a monitored entity based on the name of the entity on Dynatrace",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "entityName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "entityName"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get_entity_details",
+      "description": "Get details of a monitored entity based on the entityId on Dynatrace",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "entityId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "send_slack_message",
+      "description": "Sends a Slack message to a dedicated Slack Channel via Slack Connector on Dynatrace",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get_logs_for_entity",
+      "description": "Get Logs for a monitored entity based on name of the entity on Dynatrace",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "entityName": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "verify_dql",
+      "description": "Verify a Dynatrace Query Language (DQL) statement on Dynatrace GRAIL before executing it. This is useful to ensure that the DQL statement is valid and can be executed without errors.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "dqlStatement": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "dqlStatement"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "execute_dql",
+      "description": "Get Logs, Metrics, Spans or Events from Dynatrace GRAIL by executing a Dynatrace Query Language (DQL) statement. Always use \"verify_dql\" tool before you execute a DQL statement. A valid statement looks like this: \"fetch [logs, metrics, spans, events] | filter <some-filter> | summarize count(), by:{some-fields}. Adapt filters for certain attributes: `traceId` could be `trace_id` or `trace.id`.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "dqlStatement": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "dqlStatement"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "generate_dql_from_natural_language",
+      "description": "Convert natural language queries to Dynatrace Query Language (DQL) using Davis CoPilot AI. You can ask for problem events, security issues, logs, metrics, spans, and custom data. Workflow: 1) Generate DQL, 2) Verify with verify_dql tool, 3) Execute with execute_dql tool, 4) Iterate if results don't match expectations.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "Natural language description of what you want to query. Be specific and include time ranges, entities, and metrics of interest."
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "explain_dql_in_natural_language",
+      "description": "Explain Dynatrace Query Language (DQL) statements in natural language using Davis CoPilot AI.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "dql": {
+            "type": "string",
+            "description": "The DQL statement to explain"
+          }
+        },
+        "required": [
+          "dql"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "chat_with_davis_copilot",
+      "description": "Use this tool in case no specific tool is available. Get an answer to any Dynatrace related question as well as troubleshooting, and guidance. *(Note: Davis CoPilot AI is GA, but the Davis CoPilot APIs are in preview)*",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "Your question or request for Davis CoPilot"
+          },
+          "context": {
+            "type": "string",
+            "description": "Optional context to provide additional information"
+          },
+          "instruction": {
+            "type": "string",
+            "description": "Optional instruction for how to format the response"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "create_workflow_for_notification",
+      "description": "Create a notification for a team based on a problem type within Workflows in Dynatrace",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "problemType": {
+            "type": "string"
+          },
+          "teamName": {
+            "type": "string"
+          },
+          "channel": {
+            "type": "string"
+          },
+          "isPrivate": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "make_workflow_public",
+      "description": "Modify a workflow and make it publicly available to everyone on the Dynatrace Environment",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "workflowId": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get_kubernetes_events",
+      "description": "Get all events from a specific Kubernetes (K8s) cluster",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "clusterId": {
+            "type": "string",
+            "description": "The Kubernetes (K8s) Cluster Id, referred to as k8s.cluster.uid (this is NOT the Dynatrace environment)"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get_ownership",
+      "description": "Get detailed Ownership information for one or multiple entities on Dynatrace",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "entityIds": {
+            "type": "string",
+            "description": "Comma separated list of entityIds"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    }
+  ]
+  
