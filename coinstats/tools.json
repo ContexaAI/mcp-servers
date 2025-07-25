@@ -1,0 +1,896 @@
+[
+    {
+      "name": "get-coins",
+      "description": "Get comprehensive data about all cryptocurrencies: Price, market cap, and volume. Price changes (1h, 24h, 7d). Supply information. Trading metrics. Social links and metadata.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Search coins by name"
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number",
+            "default": 1
+          },
+          "limit": {
+            "type": "number",
+            "description": "Number of results per page",
+            "default": 20
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency for price data",
+            "default": "USD"
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Get coins by symbol"
+          },
+          "blockchains": {
+            "type": "string",
+            "description": "Blockchain filters, separated by commas (e.g., ethereum,solana)"
+          },
+          "includeRiskScore": {
+            "type": "string",
+            "description": "Include risk score: true or false. Default - false"
+          },
+          "categories": {
+            "type": "string",
+            "description": "Category filters, separated by commas (e.g., memecoins,sports)"
+          },
+          "sortBy": {
+            "type": "string",
+            "description": "Field to sort by"
+          },
+          "sortDir": {
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "description": "Sort direction"
+          },
+          "marketCap-greaterThan": {
+            "type": "number",
+            "description": "Marketcap Greater Than"
+          },
+          "marketCap-equals": {
+            "type": "number",
+            "description": "Marketcap Equals"
+          },
+          "marketCap-lessThan": {
+            "type": "number",
+            "description": "Marketcap Less Than"
+          },
+          "fullyDilutedValuation-greaterThan": {
+            "type": "number",
+            "description": "Fully Diluted Valuation Greater Than"
+          },
+          "fullyDilutedValuation-equals": {
+            "type": "number",
+            "description": "Fully Diluted Valuation Equals"
+          },
+          "fullyDilutedValuation-lessThan": {
+            "type": "number",
+            "description": "Fully Diluted Valuation Less Than"
+          },
+          "volume-greaterThan": {
+            "type": "number",
+            "description": "Volume Greater Than"
+          },
+          "volume-equals": {
+            "type": "number",
+            "description": "Volume Equals"
+          },
+          "volume-lessThan": {
+            "type": "number",
+            "description": "Volume Less Than"
+          },
+          "priceChange1h-greaterThan": {
+            "type": "number",
+            "description": "Price Change 1h Greater Than"
+          },
+          "priceChange1h-equals": {
+            "type": "number",
+            "description": "Price Change 1h Equals"
+          },
+          "priceChange1h-lessThan": {
+            "type": "number",
+            "description": "Price Change 1h Less Than"
+          },
+          "priceChange1d-greaterThan": {
+            "type": "number",
+            "description": "Price Change 1d Greater Than"
+          },
+          "priceChange1d-equals": {
+            "type": "number",
+            "description": "Price Change 1d Equals"
+          },
+          "priceChange1d-lessThan": {
+            "type": "number",
+            "description": "Price Change 1d Less Than"
+          },
+          "priceChange7d-greaterThan": {
+            "type": "number",
+            "description": "Price Change 7d Greater Than"
+          },
+          "priceChange7d-equals": {
+            "type": "number",
+            "description": "Price Change 7d Equals"
+          },
+          "priceChange7d-lessThan": {
+            "type": "number",
+            "description": "Price Change 7d Less Than"
+          },
+          "availableSupply-greaterThan": {
+            "type": "number",
+            "description": "Available Supply Greater Than"
+          },
+          "availableSupply-equals": {
+            "type": "number",
+            "description": "Available Supply Equals"
+          },
+          "availableSupply-lessThan": {
+            "type": "number",
+            "description": "Available Supply Less Than"
+          },
+          "totalSupply-greaterThan": {
+            "type": "number",
+            "description": "Total Supply Greater Than"
+          },
+          "totalSupply-equals": {
+            "type": "number",
+            "description": "Total Supply Equals"
+          },
+          "totalSupply-lessThan": {
+            "type": "number",
+            "description": "Total Supply Less Than"
+          },
+          "rank-greaterThan": {
+            "type": "number",
+            "description": "Rank Greater Than"
+          },
+          "rank-equals": {
+            "type": "number",
+            "description": "Rank Equals"
+          },
+          "rank-lessThan": {
+            "type": "number",
+            "description": "Rank Less Than"
+          },
+          "price-greaterThan": {
+            "type": "number",
+            "description": "Price Greater Than"
+          },
+          "price-equals": {
+            "type": "number",
+            "description": "Price Equals"
+          },
+          "price-lessThan": {
+            "type": "number",
+            "description": "Price Less Than"
+          },
+          "riskScore-greaterThan": {
+            "type": "number",
+            "description": "Risk Score Greater Than (Only if includeRiskScore=true)"
+          },
+          "riskScore-equals": {
+            "type": "number",
+            "description": "Risk Score Equals (Only if includeRiskScore=true)"
+          },
+          "riskScore-lessThan": {
+            "type": "number",
+            "description": "Risk Score Less Than (Only if includeRiskScore=true)"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-coin-by-id",
+      "description": "Get detailed information about a specific cryptocurrency based on its unique identifier.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "coinId": {
+            "type": "string",
+            "description": "The identifier of coin, which you received from /coins call response."
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency for price data",
+            "default": "USD"
+          }
+        },
+        "required": [
+          "coinId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-coin-chart-by-id",
+      "description": "Get chart data for a specific cryptocurrency based on its unique identifier, specifying different time ranges.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "coinId": {
+            "type": "string",
+            "description": "The identifier of coin, which you received from /coins call response."
+          },
+          "period": {
+            "type": "string",
+            "enum": [
+              "all",
+              "24h",
+              "1w",
+              "1m",
+              "3m",
+              "6m",
+              "1y"
+            ],
+            "description": "Time period for chart data"
+          }
+        },
+        "required": [
+          "coinId",
+          "period"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-coin-avg-price",
+      "description": "Get the historical average price for a specific cryptocurrency based on its unique identifier and a specific date.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "coinId": {
+            "type": "string",
+            "description": "The identifier of coin"
+          },
+          "timestamp": {
+            "type": "number",
+            "description": "Unix timestamp"
+          }
+        },
+        "required": [
+          "coinId",
+          "timestamp"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-coin-exchange-price",
+      "description": "Get the historical price data for a specific cryptocurrency on a particular exchange.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "exchange": {
+            "type": "string",
+            "description": "Exchange name"
+          },
+          "from": {
+            "type": "string",
+            "description": "From currency/coin symbol"
+          },
+          "to": {
+            "type": "string",
+            "description": "To currency/coin symbol"
+          },
+          "timestamp": {
+            "type": "number",
+            "description": "Unix timestamp"
+          }
+        },
+        "required": [
+          "exchange",
+          "from",
+          "to",
+          "timestamp"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-ticker-exchanges",
+      "description": "Get a list of supported exchanges.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-ticker-markets",
+      "description": "Get a list of tickers for a specific cryptocurrency across different exchanges.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "number",
+            "description": "Page number",
+            "default": 1
+          },
+          "limit": {
+            "type": "number",
+            "description": "Number of results per page",
+            "default": 20
+          },
+          "exchange": {
+            "type": "string",
+            "description": "Exchange name"
+          },
+          "fromCoin": {
+            "type": "string",
+            "description": "From currency/coin symbol"
+          },
+          "toCoin": {
+            "type": "string",
+            "description": "To currency/coin symbol"
+          },
+          "coinId": {
+            "type": "string",
+            "description": "Coin identifier"
+          },
+          "onlyVerified": {
+            "type": "boolean",
+            "description": "Filter only verified exchanges"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-blockchains",
+      "description": "Get a list of supported blockchains by CoinStats.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-wallet-balance",
+      "description": "Get the balance data for a provided wallet address on a specific blockchain network.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "Wallet address"
+          },
+          "connectionId": {
+            "type": "string",
+            "description": "The identifier of connection, which you received from /wallet/blockchains call response."
+          }
+        },
+        "required": [
+          "address",
+          "connectionId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-wallet-balances",
+      "description": "Get the balance data for a provided wallet address on all CoinStats supported networks.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "The wallet address for which the balance is being queried"
+          },
+          "networks": {
+            "type": "string",
+            "description": "Blockchain networks to query, comma-separated (e.g., \"ethereum,polygon,binance\")",
+            "default": "all"
+          }
+        },
+        "required": [
+          "address"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-wallet-sync-status",
+      "description": "Get the syncing status of the wallet with the blockchain network.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "Wallet address"
+          },
+          "connectionId": {
+            "type": "string",
+            "description": "The identifier of connection, which you received from /wallet/blockchains call response."
+          }
+        },
+        "required": [
+          "address",
+          "connectionId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-wallet-transactions",
+      "description": "Get transaction data for a specific wallet. Ensure transactions are synced by calling PATCH /transactions first.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "Wallet address"
+          },
+          "connectionId": {
+            "type": "string",
+            "description": "The identifier of connection, which you received from /wallet/blockchains call response."
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number",
+            "default": 1
+          },
+          "limit": {
+            "type": "number",
+            "description": "Number of results per page",
+            "default": 20
+          },
+          "from": {
+            "type": "string",
+            "description": "Start date in ISO 8601 format"
+          },
+          "to": {
+            "type": "string",
+            "description": "End date in ISO 8601 format"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency for price data",
+            "default": "USD"
+          },
+          "types": {
+            "type": "string",
+            "description": "Transaction types, comma separated (deposit,withdraw,approve,executed,balance,fee)"
+          },
+          "txId": {
+            "type": "string",
+            "description": "To search with transaction hash"
+          }
+        },
+        "required": [
+          "address",
+          "connectionId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "transactions-sync",
+      "description": "Initiate the syncing process to update transaction data for a specific wallet.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "Wallet address"
+          },
+          "connectionId": {
+            "type": "string",
+            "description": "The identifier of connection, which you received from /wallet/blockchains call response."
+          }
+        },
+        "required": [
+          "address",
+          "connectionId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-exchanges",
+      "description": "Get a list of supported exchange portfolio connections by CoinStats.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-exchange-balance",
+      "description": "Get the balance data for a provided Exchange.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "connectionFields": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "description": "The credentials given from exchange. key, secret etc."
+          },
+          "connectionId": {
+            "type": "string",
+            "description": "The exchange connection id"
+          }
+        },
+        "required": [
+          "connectionFields",
+          "connectionId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-exchange-sync-status",
+      "description": "Get the syncing status of the exchange portfolio.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "portfolioId": {
+            "type": "string",
+            "description": "The identifier of portfolio, which you received from /exchange/balance call response."
+          }
+        },
+        "required": [
+          "portfolioId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-exchange-transactions",
+      "description": "Get transaction data for a specific exchange.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "portfolioId": {
+            "type": "string",
+            "description": "The identifier of portfolio, which you received from /exchange/balance response."
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number",
+            "default": 1
+          },
+          "limit": {
+            "type": "number",
+            "description": "Number of results per page",
+            "default": 20
+          },
+          "from": {
+            "type": "string",
+            "description": "Start date in ISO 8601 format"
+          },
+          "to": {
+            "type": "string",
+            "description": "End date in ISO 8601 format"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency for price data",
+            "default": "USD"
+          },
+          "types": {
+            "type": "string",
+            "description": "Transaction types, comma separated (deposit,withdraw,approve,executed,balance,fee)"
+          }
+        },
+        "required": [
+          "portfolioId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-fiat-currencies",
+      "description": "Get a list of fiat currencies supported by CoinStats.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-news-sources",
+      "description": "Get news sources.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-news",
+      "description": "Get news articles with pagination.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "number",
+            "description": "Page number",
+            "default": 1
+          },
+          "limit": {
+            "type": "number",
+            "description": "Number of results per page",
+            "default": 20
+          },
+          "from": {
+            "type": "string",
+            "description": "Start date in ISO 8601 format"
+          },
+          "to": {
+            "type": "string",
+            "description": "End date in ISO 8601 format"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-news-by-type",
+      "description": "Get news articles based on a type.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "handpicked",
+              "trending",
+              "latest",
+              "bullish",
+              "bearish"
+            ],
+            "description": "News type"
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number",
+            "default": 1
+          },
+          "limit": {
+            "type": "number",
+            "description": "Number of results per page",
+            "default": 20
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-news-by-id",
+      "description": "Get news by id.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "News article ID"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-market-cap",
+      "description": "Get global market data.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-portfolio-coins",
+      "description": "Get a list of portfolio coins with P/L and other data displayed on CoinStats web.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "shareToken": {
+            "type": "string",
+            "description": "Portfolio share token. You can get your share token from the portfolio you want to retrive data from by clicking Share button on CoinStats web app portfolio tracker section - top right."
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number",
+            "default": 1
+          },
+          "limit": {
+            "type": "number",
+            "description": "Number of results per page",
+            "default": 20
+          },
+          "includeRiskScore": {
+            "type": "string",
+            "description": "Include risk score: true or false. Default - false"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-portfolio-chart",
+      "description": "Get portfolio performance chart data.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "shareToken": {
+            "type": "string",
+            "description": "Portfolio share token. You can get your share token from the portfolio you want to retrive data from by clicking Share button on CoinStats web app portfolio tracker section - top right."
+          },
+          "type": {
+            "type": "string",
+            "description": "One of 24h, 1w, 1m, 3m, 6m, 1y, all"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-portfolio-transactions",
+      "description": "Get a list of portfolio transactions.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "shareToken": {
+            "type": "string",
+            "description": "Portfolio share token. You can get your share token from the portfolio you want to retrive data from by clicking Share button on CoinStats web app portfolio tracker section - top right."
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number",
+            "default": 1
+          },
+          "limit": {
+            "type": "number",
+            "description": "Number of results per page",
+            "default": 20
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency for price data"
+          },
+          "coinId": {
+            "type": "string",
+            "description": "Filter by coin ID"
+          }
+        },
+        "required": [
+          "currency"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "add-portfolio-transaction",
+      "description": "Add a transaction to a manual portfolio.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "shareToken": {
+            "type": "string",
+            "description": "Portfolio share token"
+          },
+          "coinId": {
+            "type": "string",
+            "description": "Coin ID"
+          },
+          "type": {
+            "type": "string",
+            "description": "Transaction type"
+          },
+          "date": {
+            "type": "string",
+            "description": "Transaction date in ISO format"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Transaction amount"
+          },
+          "price": {
+            "type": "number",
+            "description": "Price per coin"
+          },
+          "fee": {
+            "type": "number",
+            "description": "Transaction fee"
+          },
+          "notes": {
+            "type": "string",
+            "description": "Transaction notes"
+          }
+        },
+        "required": [
+          "coinId",
+          "type",
+          "date",
+          "amount",
+          "price"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-currencies",
+      "description": "Get a list of fiat currencies supported by CoinStats.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "save-share-token",
+      "description": "Saves the provided portfolio share token to a local cache for future use across sessions.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "shareToken": {
+            "type": "string",
+            "description": "The portfolio share token to save locally."
+          }
+        },
+        "required": [
+          "shareToken"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get-share-token",
+      "description": "Retrieves the saved portfolio share token from local cache.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    }
+  ]
+  
