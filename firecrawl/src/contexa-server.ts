@@ -10,6 +10,7 @@ import { randomUUID } from 'crypto';
 import express, { Application, Request, Response } from 'express';
 
 import dotenv from 'dotenv';
+import { getEnvVarNumber } from './config/env-loader.js';
 
 import {
   ConsoleAdapter,
@@ -22,7 +23,7 @@ dotenv.config();
 
 const SERVER_NAME = 'Contexa';
 const SERVER_VERSION = '0.1.0';
-const PORT = Number(process.env.PORT) || 8080;
+const PORT = getEnvVarNumber('PORT', 8080);
 
 /**
  * Utility to build standard MCP error response

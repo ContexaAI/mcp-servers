@@ -859,20 +859,21 @@ const server = new Server(
   }
 );
 
-// Get optional API URL
-const FIRECRAWL_API_URL = process.env.FIRECRAWL_API_URL;
-const FIRECRAWL_API_KEY = process.env.FIRECRAWL_API_KEY;
+import { getEnvVar, getEnvVarNumber } from './config/env-loader.js';
 
-// Check if API key is required (only for cloud service)
+// Get optional API URL with warnings
+const FIRECRAWL_API_URL = getEnvVar('FIRECRAWL_API_URL', false);
+const FIRECRAWL_API_KEY = getEnvVar('FIRECRAWL_API_KEY', false);
+const CLOUD_SERVICE = getEnvVar('CLOUD_SERVICE', false);
+
+// Check if API key is required (only for cloud service) - but don't exit
 if (
-  process.env.CLOUD_SERVICE !== 'true' &&
+  CLOUD_SERVICE !== 'true' &&
   !FIRECRAWL_API_URL &&
   !FIRECRAWL_API_KEY
 ) {
-  console.error(
-    'Error: FIRECRAWL_API_KEY environment variable is required when using the cloud service'
-  );
-  process.exit(1);
+  console.warn('⚠️  Warning: FIRECRAWL_API_KEY environment variable is recommended when using the cloud service');
+  console.warn('   The server will start but may not function properly without API credentials');
 }
 
 // Initialize Firecrawl client with optional API URL
@@ -880,16 +881,14 @@ if (
 // Configuration for retries and monitoring
 const CONFIG = {
   retry: {
-    maxAttempts: Number(process.env.FIRECRAWL_RETRY_MAX_ATTEMPTS) || 3,
-    initialDelay: Number(process.env.FIRECRAWL_RETRY_INITIAL_DELAY) || 1000,
-    maxDelay: Number(process.env.FIRECRAWL_RETRY_MAX_DELAY) || 10000,
-    backoffFactor: Number(process.env.FIRECRAWL_RETRY_BACKOFF_FACTOR) || 2,
+    maxAttempts: getEnvVarNumber('FIRECRAWL_RETRY_MAX_ATTEMPTS', 3),
+    initialDelay: getEnvVarNumber('FIRECRAWL_RETRY_INITIAL_DELAY', 1000),
+    maxDelay: getEnvVarNumber('FIRECRAWL_RETRY_MAX_DELAY', 10000),
+    backoffFactor: getEnvVarNumber('FIRECRAWL_RETRY_BACKOFF_FACTOR', 2),
   },
   credit: {
-    warningThreshold:
-      Number(process.env.FIRECRAWL_CREDIT_WARNING_THRESHOLD) || 1000,
-    criticalThreshold:
-      Number(process.env.FIRECRAWL_CREDIT_CRITICAL_THRESHOLD) || 100,
+    warningThreshold: getEnvVarNumber('FIRECRAWL_CREDIT_WARNING_THRESHOLD', 1000),
+    criticalThreshold: getEnvVarNumber('FIRECRAWL_CREDIT_CRITICAL_THRESHOLD', 100),
   },
 };
 
@@ -976,11 +975,12 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   try {
     const { name, arguments: args } = request.params;
 
-    const apiKey = process.env.CLOUD_SERVICE
+    const apiKey = CLOUD_SERVICE
       ? (request.params._meta?.apiKey as string)
       : FIRECRAWL_API_KEY;
-    if (process.env.CLOUD_SERVICE && !apiKey) {
-      throw new Error('No API key provided');
+    if (CLOUD_SERVICE && !apiKey) {
+      console.warn('⚠️  Warning: No API key provided for cloud service');
+      console.warn('   The request may fail without proper authentication');
     }
 
     const client = new FirecrawlApp({
@@ -1478,12 +1478,9 @@ async function startServer() {
     // Start the server using contexa transport
     await contexaStart(server);
 
-    // Log successful initialization
-    safeLog('info', 'Firecrawl MCP Server initialized successfully');
-    safeLog(
-      'info',
-      `Configuration: API URL: ${FIRECRAWL_API_URL || 'default'}`
-    );
+    // Log successful initialization using console instead of safeLog to avoid connection issues
+    console.log('Firecrawl MCP Server initialized successfully');
+    console.log(`Configuration: API URL: ${FIRECRAWL_API_URL || 'default'}`);
 
     console.log('Firecrawl MCP Server running with Contexa transport');
   } catch (error) {

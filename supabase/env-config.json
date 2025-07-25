@@ -1,0 +1,14 @@
+[
+  {
+    "key": "SUPABASE_ACCESS_TOKEN",
+    "value": null,
+    "required": false,
+    "label": "SUPABASE_ACCESS_TOKEN"
+  },
+  {
+    "key": "CI",
+    "value": null,
+    "required": false,
+    "label": "CI"
+  }
+] 

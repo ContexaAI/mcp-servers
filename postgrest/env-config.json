@@ -1,0 +1,20 @@
+[
+  {
+    "key": "POSTGREST_API_URL",
+    "value": null,
+    "required": false,
+    "label": "POSTGREST_API_URL"
+  },
+  {
+    "key": "POSTGREST_API_KEY",
+    "value": null,
+    "required": false,
+    "label": "POSTGREST_API_KEY"
+  },
+  {
+    "key": "POSTGREST_SCHEMA",
+    "value": null,
+    "required": false,
+    "label": "POSTGREST_SCHEMA"
+  }
+] 
