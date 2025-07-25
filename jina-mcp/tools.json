@@ -1,0 +1,104 @@
+
+[
+    {
+      "name": "jina_reader",
+      "description": "Read and extract content from web pages using Jina AI's powerful web reader",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the webpage to read and extract content from"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "Default",
+              "Markdown",
+              "HTML",
+              "Text",
+              "Screenshot",
+              "Pageshot"
+            ],
+            "default": "Default",
+            "description": "Output format for the extracted content:\n        • Default (RECOMMENDED): The default pipeline optimized for most websites and LLM input\n        • Markdown: Returns the markdown directly from the HTML, bypassing the readability filtering\n        • HTML: Returns documentElement.outerHTML\n        • Text: Returns document.body.innerText\n        • Screenshot: Returns the image URL of the first screen\n        • Pageshot: Enhanced screenshot with additional metadata"
+          },
+          "withLinks": {
+            "type": "boolean",
+            "default": false,
+            "description": "Include links in the extracted content"
+          },
+          "withImages": {
+            "type": "boolean",
+            "default": false,
+            "description": "Include images in the extracted content"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "jina_search",
+      "description": "Search the web for information using Jina AI's semantic search engine",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Search query to find information on the web"
+          },
+          "count": {
+            "type": "number",
+            "default": 5,
+            "description": "Number of search results to return"
+          },
+          "returnFormat": {
+            "type": "string",
+            "enum": [
+              "markdown",
+              "text",
+              "html"
+            ],
+            "default": "markdown",
+            "description": "Format of the returned search results"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "jina_fact_check",
+      "description": "Verify the factuality of statements using Jina AI's fact-checking capability",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Statement to fact-check for accuracy"
+          },
+          "deepdive": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable deep analysis with more comprehensive research"
+          }
+        },
+        "required": [
+          "statement"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    }
+  ]
+  
