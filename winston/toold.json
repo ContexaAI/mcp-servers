@@ -1,0 +1,140 @@
+[
+    {
+      "name": "ai-text-detection",
+      "title": "AI Text Detection",
+      "description": "Detects AI content in a given text to detect the likelihood of the text being written by an AI.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 300,
+            "maxLength": 150000,
+            "description": "The text to scan. Texts under 600 characters may produce unreliable results and should be avoided. Maximum 150 000 characters per request."
+          },
+          "file": {
+            "type": "string",
+            "description": "A file to scan. If you supply a file, the API will scan the content of the file. The file must be in plain .pdf, .doc or .docx format. The file has priority over the text, so if you give a text and a file, it's the file that will be scanned."
+          },
+          "website": {
+            "type": "string",
+            "description": "A website URL to scan. If you supply a website, the API will fetch the content of the website and scan it. The website must be publicly accessible. It's important to know that the website has priority over the text and the file, so if you give a text, a file and a website, it's the website that will be scanned."
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "price": {
+          "type": "number",
+          "description": "The price of the text detection tool, 1 credit per word",
+          "value": 1,
+          "unit": "credits"
+        }
+      }
+    },
+    {
+      "name": "ai-image-detection",
+      "title": "AI Image Detection",
+      "description": "Detects AI content in a given image by verifying image metada and using a machine learning system trained to differentiate between human and AI-generated images.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Specifies the URL of the image to scan. The URL must be valid, publicly accessible, and point to an image in one of the following formats: JPG, JPEG, PNG, or WEBP. The image must have a minimum resolution of 256x256 pixels."
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "price": {
+          "type": "number",
+          "description": "The price of the image detection tool, 300 credits per image",
+          "value": 300,
+          "unit": "credits"
+        }
+      }
+    },
+    {
+      "name": "plagiarism-detection",
+      "title": "Plagiarism Detection",
+      "description": "Winston AI’s plagiarism API is a powerful tool designed to check text for plagiarism by scouring the internet for similar content. It queries multiple websites and compares the input text with the content found on these websites. This can be particularly useful in academic settings, content creation, legal scenarios or any other situation where originality of content is required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 100,
+            "maxLength": 120000,
+            "description": "The text to be scanned. This is required unless you provide a website or file. Each request must contain at least 100 characters and no more than 120,000 characters."
+          },
+          "language": {
+            "type": "string",
+            "description": "2 letter language code. We accept all languages. Default: en.",
+            "default": "en"
+          },
+          "country": {
+            "type": "string",
+            "description": "The country code of the country where the text was written. We accept all country codes. Default: us.",
+            "default": "us"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "price": {
+          "type": "number",
+          "description": "The price of the plagiarism detection tool, 2 credits per word",
+          "value": 2,
+          "unit": "credits"
+        }
+      }
+    },
+    {
+      "name": "text-compare",
+      "title": "Text Compare",
+      "description": "Compares two texts and returns the similarity score",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "first_text": {
+            "type": "string",
+            "maxLength": 120000,
+            "description": "The first text to compare. Maximum 120,000 characters."
+          },
+          "second_text": {
+            "type": "string",
+            "maxLength": 120000,
+            "description": "The second text to compare against the first text. Maximum 120,000 characters."
+          }
+        },
+        "required": [
+          "first_text",
+          "second_text"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "price": {
+          "type": "number",
+          "description": "The price of the text comparison tool, 1/2 credit per total words found in both texts",
+          "value": 0.5,
+          "unit": "credits"
+        }
+      }
+    }
+  ]
