@@ -16,4 +16,4 @@ RUN npm run build
 EXPOSE 8080
 
 # Expose the MCP server on stdio
-CMD [ "node", "dist/index.js" ]
+CMD [ "node", "build/index.js" ]

@@ -1,11 +1,10 @@
 import { ChatMessage } from "./types";
-import sqlite3 from "sqlite3";
 
 const envConfig = [
   {
     "key": "CHAT_DB_PATH",
     "value": null,
-    "required": true,
+    "required": false,
     "label": "CHAT_DB_PATH"
   }
 ];
@@ -26,9 +25,10 @@ function getEnvValue(key: string): string {
 
 export async function saveChatMessage(msg: ChatMessage) {
   try {
-    const db = getDb();
+    const db = await getDb();
     if (!db) {
-      throw new Error("db is not connected");
+      console.warn("⚠️  Database not available. Message not saved.");
+      return;
     }
 
     const {
@@ -85,22 +85,31 @@ export async function saveChatMessage(msg: ChatMessage) {
     console.error("save message ok");
   } catch (error) {
     console.error("save message failed: ", error);
-    throw error;
+    // Don't throw error, just log it
   }
 }
 
-export function getDb(): sqlite3.Database {
+export async function getDb(): Promise<any> {
   const dbName = getEnvValue("CHAT_DB_PATH");
   if (!dbName) {
-    throw new Error("CHAT_DB_PATH is not set");
+    console.warn("⚠️  CHAT_DB_PATH is not set. Database functionality will be disabled.");
+    return null;
   }
 
-  const db = new sqlite3.Database(dbName, (err) => {
-    if (err) {
-      console.error("chat db connect failed: ", dbName, err.message);
-      return;
-    }
-  });
+  try {
+    const sqlite3 = await import("sqlite3");
+    const db = new sqlite3.Database(dbName, (err: any) => {
+      if (err) {
+        console.warn("⚠️  Failed to connect to database:", dbName, err.message);
+        console.warn("⚠️  Database functionality will be disabled.");
+        return;
+      }
+    });
 
-  return db;
+    return db;
+  } catch (error) {
+    console.warn("⚠️  Failed to initialize database:", error);
+    console.warn("⚠️  Database functionality will be disabled.");
+    return null;
+  }
 }

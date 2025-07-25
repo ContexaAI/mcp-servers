@@ -13,9 +13,10 @@ export async function queryChatMessages({
   limit?: number;
 }): Promise<ChatMessage[]> {
   try {
-    const db = getDb();
+    const db = await getDb();
     if (!db) {
-      throw new Error("db is not connected");
+      console.warn("⚠️  Database not available. Returning empty results.");
+      return [];
     }
 
     const offset = (page - 1) * limit;
@@ -39,7 +40,7 @@ export async function queryChatMessages({
     console.error("query chat messages sql: ", sql, values);
 
     return new Promise((resolve, reject) => {
-      db.all(sql, values, (err, rows) => {
+      db.all(sql, values, (err: any, rows: any) => {
         if (err) {
           console.error("query chat messages failed: ", err);
           reject(err);
@@ -50,6 +51,6 @@ export async function queryChatMessages({
     });
   } catch (error) {
     console.error("query chat messages failed: ", error);
-    throw error;
+    return [];
   }
 }
