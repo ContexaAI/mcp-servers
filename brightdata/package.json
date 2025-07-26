@@ -1,0 +1,52 @@
+{
+    "name": "@brightdata/mcp",
+    "version": "2.4.0",
+    "description": "An MCP interface into the Bright Data toolset",
+    "type": "module",
+    "bin": {
+        "@brightdata/mcp": "./server.js"
+    },
+    "keywords": [
+        "mcp",
+        "brightdata"
+    ],
+    "author": "Bright Data",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/brightdata-com/brightdata-mcp.git"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "@modelcontextprotocol/sdk": "^1.17.0",
+        "@types/cors": "^2.8.19",
+        "@types/express": "^5.0.3",
+        "axios": "^1.8.4",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.5",
+        "express": "^5.1.0",
+        "fastmcp": "^3.1.1",
+        "mcp-trace": "^0.1.8",
+        "playwright": "^1.51.1",
+        "zod": "^3.24.2"
+    },
+    "scripts": {
+        "build": "node build.js",
+        "start": "node server.js",
+        "dev": "node server.js",
+        "test": "echo 'No tests specified'",
+        "lint": "echo 'No linting configured'",
+        "clean": "echo 'No build artifacts to clean'",
+        "prepublishOnly": "npm run build"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "files": [
+        "server.js",
+        "browser_tools.js",
+        "browser_session.js",
+        "contexa-server.js",
+        "contexa-server.ts",
+        "build.js"
+    ]
+}
